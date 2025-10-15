@@ -1,6 +1,24 @@
-include <stdio.h>
+# Build artifacts
+*.o
+*.out
+*.exe
+*.obj
+*.a
+*.so
+*.dll
 
-int main(void) {
-    printf("Bitboard Checkers project setup successful!\n");
-    return 0;
-}
+# Compiled programs
+main
+bits_demo
+bitcheckers
+
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+*.log
+
+# Backup or temporary files
+*~
+*.tmp
