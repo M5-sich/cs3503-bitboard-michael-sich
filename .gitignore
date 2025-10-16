@@ -7,11 +7,6 @@
 *.so
 *.dll
 
-# Compiled programs
-main
-bits_demo
-bitcheckers
-
 # macOS system files
 .DS_Store
 
