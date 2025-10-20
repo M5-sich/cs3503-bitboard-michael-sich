@@ -5,40 +5,39 @@
 #include <ctype.h>  // for case sensitive stuff
 
 int main() {
-    // ----- all bitboards for the game -----
+    //all bitboards for the game 
     unsigned long long bitBoard = 0ULL;
     unsigned long long blackCheckersBoard = 0ULL;
     unsigned long long redCheckersBoard   = 0ULL;
     unsigned long long blackKingsBoard    = 0ULL;
     unsigned long long redKingsBoard      = 0ULL;
 
-    // ----- game flow flags -----
+    //game flows 
     int startNewGame = 1;     // outer loop controller
     int shouldContinue = 0;   // one full match loop
-    int invalid = 0;          // input validator for replay
+    int invalid = 0;          // validator for replay
     char newGame = ' ';
 
-    // ----- turn control -----
+    //player turn 
     int player1 = 1;          // 1 = it's their turn; 0 = not
     int player2 = 0;
 
-    // ----- inputs -----
+    // inputs for position
     int initialRow = 0;
     int initialCol = 0;
 
     printf("\nWelcome to BitBoard Checkers!\n");
-    printf("The game has two players: Player 1 (RED) and Player 2 (BLACK).\n");
+    printf("The game has two players: Player 1 (Red/bottom) and Player 2 (Black/top).\n");
 
     while (startNewGame) {
 
-        // set up a fresh board and show it once per new game
+        // seting up a new board and show it once per new game
         if (!invalid) {
-            invalid = 1; // mark we’ve handled the “new game” setup
-            setBoard(&bitBoard, &blackCheckersBoard, &redCheckersBoard,
-                     &blackKingsBoard, &redKingsBoard);
+            invalid = 1; // default handling the “new game” setup
+            setBoard(&bitBoard, &blackCheckersBoard, &redCheckersBoard, &blackKingsBoard, &redKingsBoard);
 
             printBoard(blackCheckersBoard, redCheckersBoard);
-            printf("\nPlayer 1 (Red/Bottom) moves first.\n");
+            printf("\nPlayer 1 (Red) moves first.\n");
             shouldContinue = 1;
 
             // starting with Player 1’s turn
@@ -46,11 +45,8 @@ int main() {
             player2 = 0; // just in case
         }
 
-
         while (shouldContinue) {
-
-      
-            // Player 1 (red) turn
+            // Player 1 turn
             while (player1) {
                 printf("(Player 1) Checker to move (row,col): ");
                 if (scanf("%d,%d", &initialRow, &initialCol) != 2) {
@@ -63,24 +59,25 @@ int main() {
                 // convert (row,col) to bit index
                 int startPos = coordToBit(initialRow, initialCol);
 
-                // make sure a red piece is actually there
+                // making sure a red piece is actually there
                 if (isEmpty(redCheckersBoard, startPos)) {
                     printf("Invalid move. That square has no red checker.\n");
                     continue; // still Player 1’s turn
                 }
 
-                // ask which diagonal direction (UpRight or UpLeft)
+                // asking which diagonal direction (UpRight or UpLeft)
                 char direction = '\0';
                 printf("Shift direction (U = Up-Right, L = Up-Left): ");
                 scanf(" %c", &direction);
 
-                // try the move
                 int validMove = 0;
 
                 if (direction == 'U' || direction == 'u') {
                     validMove = shiftUpRight(&redCheckersBoard, &bitBoard, startPos);
+
                 } else if (direction == 'L' || direction == 'l') {
                     validMove = shiftUpLeft(&redCheckersBoard, &bitBoard, startPos);
+
                 } else {
                     printf("Invalid input. Use 'U' or 'L'.\n");
                     continue; // still Player 1’s turn
@@ -89,7 +86,7 @@ int main() {
                 if (validMove == 1) {
                     printBoard(blackCheckersBoard, redCheckersBoard);
                     player1 = 0; // end player 1 turn
-                    player2 = 1; // pass control
+                    player2 = 1; // pass turn/control
                 } else {
                     printf("Move failed. Try again.\n");
                     // keep player1 = 1
@@ -102,19 +99,18 @@ int main() {
                 printf("(Player 2) Checker to move (row,col): ");
                 if (scanf("%d,%d", &initialRow, &initialCol) != 2) {
                     printf("Invalid input. Try again using row,col (e.g. 6,3).\n");
-                    while (getchar() != '\n') { }
                     continue;
                 }
 
                 int startPos = coordToBit(initialRow, initialCol);
 
-                // make sure a black piece is actually there
+                // making sure a black piece is actually there
                 if (isEmpty(blackCheckersBoard, startPos)) {
                     printf("Invalid move. That square has no black checker.\n");
                     continue; // still Player 2’s turn
                 }
 
-                // ask which diagonal direction (DownRight or DownLeft)
+                // asking which diagonal direction (DownRight or DownLeft)
                 char direction = '\0';
                 printf("Shift direction (R = Down-Right, L = Down-Left): ");
                 scanf(" %c", &direction);
@@ -160,13 +156,13 @@ int main() {
                     startNewGame = 0;
                     printf("Thanks for playing!\n");
                 } else {
-                    // reset loop controls for a new game
+                    // reseting the loop controls for a new game
                     shouldContinue = 0;
                     player1 = 1;
                     player2 = 0;
-                    // flip invalid so we hit the setup block again
+                    // fliping invalid so we hit the setup block again
                     invalid = 0;
-                    // continue outer while to resetup
+                    // continuing outer while to resetup
                 }
             }
         }

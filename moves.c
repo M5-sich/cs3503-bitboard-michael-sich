@@ -4,33 +4,32 @@
 // Red / Kings: up-right
 int shiftUpRight(unsigned long long *selfBoard, unsigned long long *bitBoard, int startPos)
 {
-    // right wall or top row? then you can't go up-right
+    // every bit position on the right side has a remainder 7 in common so i can use that to my advantage
     if (startPos % 8 == 7 || startPos >= 56) {
         printf("Invalid move. You are attempting to move off the board.\n");
         return 0;
     }
 
-    // make sure the piece you picked is actually on *your* board
+    // making sure the piece picked is actually on board
     unsigned long long fromMask = 1ULL << startPos;
     if ( (*selfBoard & fromMask) == 0ULL ) {
         printf("Invalid move. That is not your checker.\n");
         return 0;
     }
 
-    // target is one row up and one col right
+    // target is one row up and one column to the right
     int targetPos = startPos + 9;
     unsigned long long toMask = 1ULL << targetPos;
 
-    // someone already there? can't move
+    // checking if somone is there
     if ( (*bitBoard & toMask) != 0ULL ) {
         printf("Invalid move. Destination is occupied.\n");
         return 0;
     }
 
-    // do the actual move: clear old, set new (both boards)
+    // doing the actual move, clearing old, and seting new board
     *selfBoard = *selfBoard & (~fromMask);
     *selfBoard = *selfBoard | toMask;
-
     *bitBoard = *bitBoard & (~fromMask);
     *bitBoard = *bitBoard | toMask;
 
@@ -38,10 +37,10 @@ int shiftUpRight(unsigned long long *selfBoard, unsigned long long *bitBoard, in
 }
 
 
-// Red / Kings: up-left
+// Red / Kings up-left
 int shiftUpLeft(unsigned long long *selfBoard, unsigned long long *bitBoard, int startPos)
 {
-    // left wall or top row? then you can't go up-left
+    // then you can't go up-left if on the left side and checking this by all common remainders of the left bits
     if (startPos % 8 == 0 || startPos >= 56) {
         printf("Invalid move. You are attempting to move off the board.\n");
         return 0;
@@ -74,7 +73,7 @@ int shiftUpLeft(unsigned long long *selfBoard, unsigned long long *bitBoard, int
 // Black / Kings: down-right
 int shiftDownRight(unsigned long long *selfBoard, unsigned long long *bitBoard, int startPos)
 {
-    // right wall or bottom row? can't go down-right
+    // checking right side condition
     if (startPos % 8 == 7 || startPos <= 7) {
         printf("Invalid move. You are attempting to move off the board.\n");
         return 0;
@@ -107,7 +106,7 @@ int shiftDownRight(unsigned long long *selfBoard, unsigned long long *bitBoard, 
 // Black / Kings: down-left
 int shiftDownLeft(unsigned long long *selfBoard, unsigned long long *bitBoard, int startPos)
 {
-    // left wall or bottom row? can't go down-left
+    // checking left side condition
     if (startPos % 8 == 0 || startPos <= 7) {
         printf("Invalid move. You are attempting to move off the board.\n");
         return 0;

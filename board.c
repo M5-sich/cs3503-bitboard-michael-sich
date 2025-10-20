@@ -1,14 +1,7 @@
 #include "game.h"
 
-// ====================================================================
-// Function: setBoard
-// Purpose: Initializes all bitboards for a new game of checkers
-// ====================================================================
-void setBoard(unsigned long long *bitBoard,
-              unsigned long long *blackCheckersBoard,
-              unsigned long long *redCheckersBoard,
-              unsigned long long *blackKingsBoard,
-              unsigned long long *redKingsBoard) {
+//Initializes all bitboards for a new game of checkers
+void setBoard(unsigned long long *bitBoard, unsigned long long *blackCheckersBoard, unsigned long long *redCheckersBoard, unsigned long long *blackKingsBoard, unsigned long long *redKingsBoard) {
 
     // Setting all boards to empty
     *bitBoard = 0ULL;
@@ -28,26 +21,13 @@ void setBoard(unsigned long long *bitBoard,
     *bitBoard = *blackCheckersBoard | *redCheckersBoard | *blackKingsBoard | *redKingsBoard;
 }
 
-
-// ====================================================================
-// Function: updateBitBoard
-// Purpose: Combines all individual boards into a single full board
-// ====================================================================
-void updateBitBoard(unsigned long long *bitBoard,
-                    unsigned long long *blackBoard,
-                    unsigned long long *redBoard,
-                    unsigned long long *blackKings,
-                    unsigned long long *redKings) {
-
-    // Combine all bitboards into the overall bitBoard using OR
+//Combines all individual boards into a single full board
+void updateBitBoard(unsigned long long *bitBoard, unsigned long long *blackBoard, unsigned long long *redBoard, unsigned long long *blackKings, unsigned long long *redKings) {
+    // Combining all bitboards into the overall bitBoard using OR
     *bitBoard = *blackBoard | *redBoard | *blackKings | *redKings;
 }
 
-
-// ====================================================================
-// Function: printBoard
-// Purpose: Prints the checkers board in a clean 8x8 grid format
-// ====================================================================
+//Prints the checkers board in a 8x8 grid and also changes all player 1's checkers to 'R' and player 2 to 'B'
 void printBoard(unsigned long long blackCheckersBoard, unsigned long long redCheckersBoard) {
     printf("\n   _________________________________\n");
 
@@ -63,7 +43,7 @@ void printBoard(unsigned long long blackCheckersBoard, unsigned long long redChe
             else if (redCheckersBoard & mask)
                 piece = 'R';
 
-            printf("|_%c_", piece); // consistent 4-width spacing
+            printf("|_%c_", piece); 
         }
 
         printf("|\n");
@@ -73,12 +53,9 @@ void printBoard(unsigned long long blackCheckersBoard, unsigned long long redChe
     printf("     1   2   3   4   5   6   7   8\n\n");
 }
 
-// ====================================================================
-// Function: printBinary
-// Purpose: Prints the full bitboard as a 64-bit binary number
-// ====================================================================
+//Prints the full bitboard as a 64-bit binary number (Not really needed and is mainly for me to use to debug the program)
 void printBinary(unsigned long long n) {
-    int i = 63;        // start from most significant bit
+    int i = 63;        // starting from most significant bit
     int bitCount = 0;  // counter to space every 8 bits
 
     printf("\nBitBoard in binary:\n");
@@ -95,7 +72,7 @@ void printBinary(unsigned long long n) {
 
         bitCount++;
 
-        // Add a space after every 8 bits for readability
+        // Adding a space after every 8 bits for clarity
         if (bitCount % 8 == 0) {
             printf(" ");
         }
@@ -105,33 +82,21 @@ void printBinary(unsigned long long n) {
     printf("\n");
 }
 
-
-// ====================================================================
-// Function: coordToBit
-// Purpose: Converts (row, col) coordinates into bit index (0–63)
-// ====================================================================
+//Converts (row, col) coordinates into bit index (0–63)
 int coordToBit(int row, int col) {
-
-    // Example: (1,1) → 0 | (2,1) → 8 | (8,8) → 63
-    int bit = (row - 1) * 8 + (col - 1);
-
+    int bit = (row - 1) * 8 + (col - 1); //formula found to solve for the position 
     return bit;
 }
 
-
-// ====================================================================
-// Function: isEmpty
-// Purpose: Checks if a specific bit position is empty or occupied
-// Returns: 1 if empty, 0 if occupied
-// ====================================================================
+//Checks if a specific bit position is empty or occupied
 int isEmpty(unsigned long long board, int bitPosition) {
-    unsigned long long mask = 1ULL << bitPosition; // create mask for bit position
+    unsigned long long mask = 1ULL << bitPosition; // creating mask for bit position
 
     if (board & mask) {
-        // Bit is occupied
+        // space is occupied
         return 0;
     } else {
-        // Bit is empty
+        // space is empty
         return 1;
     }
 }
