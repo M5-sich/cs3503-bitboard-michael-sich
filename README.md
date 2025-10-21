@@ -86,5 +86,5 @@ No code was directly copied or auto-generated without understanding and verifica
 
 ## Known Limitations
 
-- **King Backwards Movment** Not yet implemented — pieces do not become kings when reaching the opposite edge.
+- **King Backwards Movment** Not yet implemented — pieces do not have the ability to move backwards.
 - **Win Detection:** The game does not automatically recognize a winner; play continues indefinitely.
