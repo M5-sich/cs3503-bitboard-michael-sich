@@ -77,6 +77,15 @@ gcc -std=c11 -Wall -Wextra main.c board.c moves.c -o main
 ./main
 ```
 
+Or you can use Makefile
+
+### Makefile
+
+```bash
+make        # compiles all source files into main
+make run    # runs the program
+```
+
 ## Academic Integrity & AI Transparency
 
 This project was completed as part of **CS 3503: Computer Organization & Architecture**.  
