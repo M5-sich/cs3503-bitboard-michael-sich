@@ -6,7 +6,7 @@
 //Board functions
 void setBoard(unsigned long long *bitBoard, unsigned long long *blackCheckersBoard, unsigned long long *redCheckersBoard, unsigned long long *blackKingsBoard, unsigned long long *redKingsBoard);
 void updateBitBoard(unsigned long long *bitBoard, unsigned long long *blackBoard, unsigned long long *redBoard, unsigned long long *blackKings,unsigned long long *redKings);
-void printBoard(unsigned long long blackCheckersBoard, unsigned long long redCheckersBoard);
+void printBoard(unsigned long long blackCheckersBoard, unsigned long long redCheckersBoard, unsigned long long redKingsBoard, unsigned long long blackKingsBoard);
 void printBinary(unsigned long long n);
 int  coordToBit(int row, int col);
 int  isEmpty(unsigned long long board, int bitPosition);
@@ -23,5 +23,7 @@ int captureUpRight(unsigned long long *selfBoard, unsigned long long *oppBoard, 
 int captureUpLeft(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
 int captureDownRight(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
 int captureDownLeft(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
+
+void checkForKingPromotion(unsigned long long *redCheckersBoard, unsigned long long *blackCheckersBoard, unsigned long long *redKingsBoard, unsigned long long *blackKingsBoard);
 
 #endif

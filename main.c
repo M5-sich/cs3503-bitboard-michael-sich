@@ -36,7 +36,7 @@ int main() {
             invalid = 1; // default handling the “new game” setup
             setBoard(&bitBoard, &blackCheckersBoard, &redCheckersBoard, &blackKingsBoard, &redKingsBoard);
 
-            printBoard(blackCheckersBoard, redCheckersBoard);
+            printBoard(blackCheckersBoard, redCheckersBoard, redKingsBoard, blackKingsBoard);
             printf("\nPlayer 1 (Red) moves first.\n");
             shouldContinue = 1;
 
@@ -102,10 +102,15 @@ int main() {
                 }
 
                 if (validMove == 1) {
-                    printBoard(blackCheckersBoard, redCheckersBoard);
+                    printBoard(blackCheckersBoard, redCheckersBoard, redKingsBoard, blackKingsBoard);
+
+                    // Checking if any checker became a king
+                    checkForKingPromotion(&redCheckersBoard, &blackCheckersBoard, &redKingsBoard, &blackKingsBoard);
+
                     player1 = 0;
                     player2 = 1;
-                } else {
+                }
+                else {
                     printf("Invalid move. Try again.\n");
                     // keep player1 = 1
                 }
@@ -165,10 +170,15 @@ int main() {
                 }
 
                 if (validMove == 1) {
-                    printBoard(blackCheckersBoard, redCheckersBoard);
-                    player2 = 0;
-                    player1 = 1;
-                } else {
+                    printBoard(blackCheckersBoard, redCheckersBoard, redKingsBoard, blackKingsBoard);
+
+                    // Check if any checker became a king
+                    checkForKingPromotion(&redCheckersBoard, &blackCheckersBoard, &redKingsBoard, &blackKingsBoard);
+
+                    player1 = 0;
+                    player2 = 1;
+                }
+                else {
                     printf("Invalid move. Try again.\n");
                 }
             }

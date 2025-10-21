@@ -29,9 +29,10 @@ void updateBitBoard(unsigned long long *bitBoard, unsigned long long *blackBoard
 }
 
 //Prints the checkers board in a 8x8 grid and also changes all player 1's checkers to 'R' and player 2 to 'B'
-void printBoard(unsigned long long blackCheckersBoard, unsigned long long redCheckersBoard) {
+void printBoard(unsigned long long blackCheckersBoard, unsigned long long redCheckersBoard, unsigned long long redKingsBoard, unsigned long long blackKingsBoard) {
     printf("\n   _________________________________\n");
 
+        
     for (int row = 7; row >= 0; row--) {
         printf("%d  ", row + 1); // left row number
 
@@ -39,10 +40,14 @@ void printBoard(unsigned long long blackCheckersBoard, unsigned long long redChe
             unsigned long long mask = 1ULL << (row * 8 + col);
             char piece = ' ';
 
-            if (blackCheckersBoard & mask)
-                piece = 'B';
+            if (redKingsBoard & mask)
+                piece = 'k';                // red king
+            else if (blackKingsBoard & mask)
+                piece = 'K';                // black king
             else if (redCheckersBoard & mask)
-                piece = 'R';
+                piece = 'R';                // red checker
+            else if (blackCheckersBoard & mask)
+                piece = 'B';  
 
             printf("|_%c_", piece); 
         }

@@ -331,3 +331,28 @@ int captureDownLeft(unsigned long long *selfBoard, unsigned long long *oppBoard,
 
     return 1;
 }
+
+void checkForKingPromotion(unsigned long long *redCheckersBoard, unsigned long long *blackCheckersBoard, unsigned long long *redKingsBoard, unsigned long long *blackKingsBoard) {
+    // Row 8 = bits 56–63 
+    unsigned long long topRowMask = 0xFF00000000000000ULL;
+
+    // Row 1 = bits 0–7 
+    unsigned long long bottomRowMask = 0x00000000000000FFULL;
+
+    // If any red checker reaches top row then change 
+    unsigned long long promoteRed = (*redCheckersBoard & topRowMask);
+    if (promoteRed) {
+        *redKingsBoard = *redKingsBoard | promoteRed;         // add to kings
+        *redCheckersBoard = *redCheckersBoard & ~promoteRed;     // remove from regular checkers
+    }
+
+    // If any black checker reaches bottom row then change 
+    unsigned long long promoteBlack = (*blackCheckersBoard & bottomRowMask);
+    if (promoteBlack) {
+        *blackKingsBoard = *blackKingsBoard | promoteBlack;
+        *blackCheckersBoard = *blackCheckersBoard & ~promoteBlack;
+    }
+}
+
+
+
