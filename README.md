@@ -26,8 +26,12 @@ The goal of the project was to represent all game logic using bit manipulation i
 │ ├── shiftUpLeft()
 │ ├── shiftDownRight()
 │ ├── shiftDownLeft()
-│ ├── (future) capture logic
-│ ├── (future) king promotion and win detection helpers
+│ ├── captureUpRight()
+│ ├── captureUpLeft()
+│ ├── captureDownRight()
+│ ├── captureDownLeft()
+│ ├── checkForKingPromotion()
+│
 │
 ├── game.h
 │ ├── function prototypes for all board and move functions
