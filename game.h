@@ -18,4 +18,10 @@ int shiftUpLeft(unsigned long long *selfBoard, unsigned long long *bitBoard, int
 int shiftDownRight(unsigned long long *selfBoard, unsigned long long *bitBoard, int startPos);
 int shiftDownLeft(unsigned long long *selfBoard, unsigned long long *bitBoard, int startPos);
 
+//Capture functions
+int captureUpRight(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
+int captureUpLeft(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
+int captureDownRight(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
+int captureDownLeft(unsigned long long *selfBoard, unsigned long long *oppBoard, unsigned long long *bitBoard, int startPos);
+
 #endif

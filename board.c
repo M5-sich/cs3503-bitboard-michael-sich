@@ -1,5 +1,6 @@
 #include "game.h"
 
+
 //Initializes all bitboards for a new game of checkers
 void setBoard(unsigned long long *bitBoard, unsigned long long *blackCheckersBoard, unsigned long long *redCheckersBoard, unsigned long long *blackKingsBoard, unsigned long long *redKingsBoard) {
 

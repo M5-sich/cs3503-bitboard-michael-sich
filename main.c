@@ -50,50 +50,66 @@ int main() {
             while (player1) {
                 printf("(Player 1) Checker to move (row,col): ");
                 if (scanf("%d,%d", &initialRow, &initialCol) != 2) {
-                    // bad input line; clear and retry
                     printf("Invalid input. Try again using row,col (e.g. 3,4).\n");
-                    while (getchar() != '\n') { }
                     continue;
                 }
 
-                // convert (row,col) to bit index
                 int startPos = coordToBit(initialRow, initialCol);
 
-                // making sure a red piece is actually there
                 if (isEmpty(redCheckersBoard, startPos)) {
                     printf("Invalid move. That square has no red checker.\n");
-                    continue; // still Player 1’s turn
+                    continue;
                 }
 
-                // asking which diagonal direction (UpRight or UpLeft)
-                char direction = '\0';
-                printf("Shift direction (U = Up-Right, L = Up-Left): ");
-                scanf(" %c", &direction);
+                // asking if they want a normal move or a capture
+                char action = '\0';
+                printf("Action (M = Move, C = Capture): ");
+                scanf(" %c", &action);
 
                 int validMove = 0;
 
-                if (direction == 'U' || direction == 'u') {
-                    validMove = shiftUpRight(&redCheckersBoard, &bitBoard, startPos);
+                if (action == 'M' || action == 'm') {
+                    char direction = '\0';
+                    printf("Shift direction (U = Up-Right, L = Up-Left): ");
+                    scanf(" %c", &direction);
 
-                } else if (direction == 'L' || direction == 'l') {
-                    validMove = shiftUpLeft(&redCheckersBoard, &bitBoard, startPos);
+                    if (direction == 'U' || direction == 'u') {
+                        validMove = shiftUpRight(&redCheckersBoard, &bitBoard, startPos);
+                    } else if (direction == 'L' || direction == 'l') {
+                        validMove = shiftUpLeft(&redCheckersBoard, &bitBoard, startPos);
+                    } else {
+                        printf("Invalid input. Use 'U' or 'L'.\n");
+                        continue;
+                    }
+                }
+                else if (action == 'C' || action == 'c') {
+                    char direction = '\0';
+                    printf("Capture direction (U = Up-Right, L = Up-Left): ");
+                    scanf(" %c", &direction);
 
-                } else {
-                    printf("Invalid input. Use 'U' or 'L'.\n");
-                    continue; // still Player 1’s turn
+                    if (direction == 'U' || direction == 'u') {
+                        validMove = captureUpRight(&redCheckersBoard, &blackCheckersBoard, &bitBoard, startPos);
+                    } else if (direction == 'L' || direction == 'l') {
+                        validMove = captureUpLeft(&redCheckersBoard, &blackCheckersBoard, &bitBoard, startPos);
+                    } else {
+                        printf("Invalid input. Use 'U' or 'L'.\n");
+                        continue;
+                    }
+                }
+                else {
+                    printf("Invalid input. Use 'M' or 'C'.\n");
+                    continue;
                 }
 
                 if (validMove == 1) {
                     printBoard(blackCheckersBoard, redCheckersBoard);
-                    player1 = 0; // end player 1 turn
-                    player2 = 1; // pass turn/control
+                    player1 = 0;
+                    player2 = 1;
                 } else {
-                    printf("Move failed. Try again.\n");
+                    printf("Invalid move. Try again.\n");
                     // keep player1 = 1
                 }
             }
-
-
             // Player 2 (black/top) turn
             while (player2) {
                 printf("(Player 2) Checker to move (row,col): ");
@@ -104,43 +120,60 @@ int main() {
 
                 int startPos = coordToBit(initialRow, initialCol);
 
-                // making sure a black piece is actually there
                 if (isEmpty(blackCheckersBoard, startPos)) {
                     printf("Invalid move. That square has no black checker.\n");
-                    continue; // still Player 2’s turn
+                    continue;
                 }
 
-                // asking which diagonal direction (DownRight or DownLeft)
-                char direction = '\0';
-                printf("Shift direction (R = Down-Right, L = Down-Left): ");
-                scanf(" %c", &direction);
+                char action = '\0';
+                printf("Action (M = Move, C = Capture): ");
+                scanf(" %c", &action);
 
                 int validMove = 0;
 
-                if (direction == 'R' || direction == 'r') {
-                    validMove = shiftDownRight(&blackCheckersBoard, &bitBoard, startPos);
-                } else if (direction == 'L' || direction == 'l') {
-                    validMove = shiftDownLeft(&blackCheckersBoard, &bitBoard, startPos);
-                } else {
-                    printf("Invalid input. Use 'R' or 'L'.\n");
-                    continue; // still Player 2’s turn
+                if (action == 'M' || action == 'm') {
+                    char direction = '\0';
+                    printf("Shift direction (R = Down-Right, L = Down-Left): ");
+                    scanf(" %c", &direction);
+
+                    if (direction == 'R' || direction == 'r') {
+                        validMove = shiftDownRight(&blackCheckersBoard, &bitBoard, startPos);
+                    } else if (direction == 'L' || direction == 'l') {
+                        validMove = shiftDownLeft(&blackCheckersBoard, &bitBoard, startPos);
+                    } else {
+                        printf("Invalid input. Use 'R' or 'L'.\n");
+                        continue;
+                    }
+                }
+                else if (action == 'C' || action == 'c') {
+                    char direction = '\0';
+                    printf("Capture direction (R = Down-Right, L = Down-Left): ");
+                    scanf(" %c", &direction);
+
+                    if (direction == 'R' || direction == 'r') {
+                        validMove = captureDownRight(&blackCheckersBoard, &redCheckersBoard, &bitBoard, startPos);
+                    } else if (direction == 'L' || direction == 'l') {
+                        validMove = captureDownLeft(&blackCheckersBoard, &redCheckersBoard, &bitBoard, startPos);
+                    } else {
+                        printf("Invalid input. Use 'R' or 'L'.\n");
+                        continue;
+                    }
+                }
+                else {
+                    printf("Invalid input. Use 'M' or 'C'.\n");
+                    continue;
                 }
 
                 if (validMove == 1) {
                     printBoard(blackCheckersBoard, redCheckersBoard);
-                    player2 = 0; // end player 2 turn
-                    player1 = 1; // back to player 1
+                    player2 = 0;
+                    player1 = 1;
                 } else {
-                    printf("Move failed. Try again.\n");
+                    printf("Invalid move. Try again.\n");
                 }
             }
 
-            // TODO: add a real win condition (no moves / no pieces / etc.)
-            // For now, break out after one pair of moves to avoid infinite loops.
-            // Comment this out once you add a winner check.
-            // shouldContinue = 0;
         }
-
         invalid = 1; // assume invalid until proven otherwise
         while (invalid) {
             printf("New game? (Type Y or N): ");
@@ -167,7 +200,6 @@ int main() {
             }
         }
     }
-
     return 0;
 }
 
