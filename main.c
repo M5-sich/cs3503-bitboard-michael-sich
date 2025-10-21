@@ -51,6 +51,8 @@ int main() {
                 printf("(Player 1) Checker to move (row,col): ");
                 if (scanf("%d,%d", &initialRow, &initialCol) != 2) {
                     printf("Invalid input. Try again using row,col (e.g. 3,4).\n");
+                    int ch;
+                    while ((ch = getchar()) != '\n' && ch != EOF) { }  // Flush the rest of the line
                     continue;
                 }
 
@@ -120,6 +122,8 @@ int main() {
                 printf("(Player 2) Checker to move (row,col): ");
                 if (scanf("%d,%d", &initialRow, &initialCol) != 2) {
                     printf("Invalid input. Try again using row,col (e.g. 6,3).\n");
+                    int ch;
+                    while ((ch = getchar()) != '\n' && ch != EOF) { }  // Flush the rest of the line
                     continue;
                 }
 
