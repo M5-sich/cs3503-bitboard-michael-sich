@@ -179,8 +179,8 @@ int main() {
                     // Check if any checker became a king
                     checkForKingPromotion(&redCheckersBoard, &blackCheckersBoard, &redKingsBoard, &blackKingsBoard);
 
-                    player1 = 0;
-                    player2 = 1;
+                    player1 = 1;
+                    player2 = 0;
                 }
                 else {
                     printf("Invalid move. Try again.\n");
